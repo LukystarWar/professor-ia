@@ -8,13 +8,13 @@ from config import (
 
 class LLMService:
     def __init__(self):
-        if LLM_PROVIDER == 'groq':
+        if os.getenv('GROQ_API_KEY'):
             self.client = OpenAI(
                 api_key=os.getenv('GROQ_API_KEY'),
-                base_url="https://api.groq.com/openai/v1"
+                api_base="https://api.groq.com/openai/v1"
             )
         else:
-            raise ValueError(f"Provedor LLM não suportado: {LLM_PROVIDER}")
+            raise ValueError(f"API key não encontrada no ambiente")
     
     def _validar_json(self, json_str: str) -> str:
         """Limpa e valida a string JSON"""
